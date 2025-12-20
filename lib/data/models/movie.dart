@@ -1,11 +1,24 @@
 class MovieResponse {
+  final int page;
   final List<Movie> results;
+  final int totalPages;
+  final int totalResults;
 
-  MovieResponse({required this.results});
+  MovieResponse({
+    required this.page,
+    required this.results,
+    required this.totalPages,
+    required this.totalResults,
+  });
 
   factory MovieResponse.fromJson(Map<String, dynamic> json) {
     return MovieResponse(
-      results: (json['results'] as List).map((i) => Movie.fromJson(i)).toList(),
+      page: json['page'] ?? 0,
+      results:
+          (json['results'] as List?)?.map((i) => Movie.fromJson(i)).toList() ??
+          [],
+      totalPages: json['total_pages'] ?? 0,
+      totalResults: json['total_results'] ?? 0,
     );
   }
 }
@@ -16,6 +29,7 @@ class Movie {
   final String? posterPath;
   final String overview;
   final double voteAverage;
+  final String? releaseDate;
 
   Movie({
     required this.id,
@@ -23,15 +37,17 @@ class Movie {
     this.posterPath,
     required this.overview,
     required this.voteAverage,
+    this.releaseDate,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
       id: json['id'],
-      title: json['title'],
+      title: json['title'] ?? '',
       posterPath: json['poster_path'],
-      overview: json['overview'],
-      voteAverage: (json['vote_average'] as num).toDouble(),
+      overview: json['overview'] ?? '',
+      voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
+      releaseDate: json['release_date'],
     );
   }
 }
@@ -84,16 +100,23 @@ class CreditsResponse {
 }
 
 class Cast {
+  final int id;
   final String name;
   final String character;
   final String? profilePath;
 
-  Cast({required this.name, required this.character, this.profilePath});
+  Cast({
+    required this.id,
+    required this.name,
+    required this.character,
+    this.profilePath,
+  });
 
   factory Cast.fromJson(Map<String, dynamic> json) {
     return Cast(
-      name: json['name'],
-      character: json['character'],
+      id: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      character: json['character'] ?? '',
       profilePath: json['profile_path'],
     );
   }

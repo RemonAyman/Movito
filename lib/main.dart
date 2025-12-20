@@ -6,6 +6,23 @@ import 'ui/screens/signup_screen.dart';
 import 'ui/screens/home_screen.dart';
 import 'ui/screens/movie_detail_screen.dart';
 import 'ui/screens/reset_password_screen.dart';
+import 'ui/screens/profile_screen.dart';
+import 'ui/screens/edit_profile_screen.dart';
+import 'ui/screens/add_friend_screen.dart';
+import 'ui/screens/friend_requests_screen.dart';
+import 'ui/screens/friends_screen.dart';
+import 'ui/screens/chat_list_screen.dart';
+import 'ui/screens/chat_detail_screen.dart';
+import 'ui/screens/private_chat_detail_screen.dart';
+import 'ui/screens/new_private_chat_screen.dart';
+import 'ui/screens/new_group_screen.dart';
+import 'ui/screens/media_list_screen.dart';
+import 'ui/screens/ratings_screen.dart';
+import 'ui/screens/actor_details_screen.dart';
+import 'ui/screens/splash_screen.dart';
+import 'ui/screens/tv_show_detail_screen.dart';
+import 'ui/screens/search_screen.dart';
+import 'ui/screens/see_more_screen.dart';
 import 'utils/constants.dart';
 
 void main() async {
@@ -60,13 +77,21 @@ class _MovieAppState extends State<MovieApp> {
           bodyMedium: TextStyle(color: Colors.white70),
         ),
       ),
-      initialRoute: _isLoggedIn ? '/home' : '/login',
+      initialRoute: '/splash',
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case '/login':
             return MaterialPageRoute(
               builder: (context) =>
                   LoginScreen(onLoginSuccess: _onLoginSuccess),
+            );
+          case '/splash':
+            return MaterialPageRoute(
+              builder: (context) => const SplashScreen(),
+            );
+          case '/search':
+            return MaterialPageRoute(
+              builder: (context) => const SearchScreen(),
             );
           case '/signup':
             return MaterialPageRoute(
@@ -82,6 +107,100 @@ class _MovieAppState extends State<MovieApp> {
             final movieId = settings.arguments as int;
             return MaterialPageRoute(
               builder: (context) => MovieDetailScreen(movieId: movieId),
+            );
+          case '/profile':
+            final userId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => ProfileScreen(userId: userId),
+            );
+          case '/edit_profile':
+            return MaterialPageRoute(
+              builder: (context) => const EditProfileScreen(),
+            );
+          case '/add_friend':
+            return MaterialPageRoute(
+              builder: (context) => const AddFriendScreen(),
+            );
+          case '/friend_requests':
+            return MaterialPageRoute(
+              builder: (context) => const FriendRequestsScreen(),
+            );
+          case '/friends':
+            final userId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => FriendsScreen(userId: userId),
+            );
+          case '/chat_list':
+            return MaterialPageRoute(
+              builder: (context) => const ChatListScreen(),
+            );
+          case '/chat_detail':
+            final chatId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => ChatDetailScreen(chatId: chatId),
+            );
+          case '/private_chat_detail':
+            final chatId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => PrivateChatDetailScreen(chatId: chatId),
+            );
+          case '/new_private_chat':
+            return MaterialPageRoute(
+              builder: (context) => const NewPrivateChatScreen(),
+            );
+          case '/new_group':
+            return MaterialPageRoute(
+              builder: (context) => const NewGroupScreen(),
+            );
+          case '/favorites':
+            final userId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => MediaListScreen(
+                title: "Favorites",
+                collectionName: "favorites",
+                userId: userId,
+              ),
+            );
+          case '/watchlist':
+            final userId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => MediaListScreen(
+                title: "Watchlist",
+                collectionName: "watchlist",
+                userId: userId,
+              ),
+            );
+          case '/watched':
+            final userId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => MediaListScreen(
+                title: "Watched",
+                collectionName: "watched",
+                userId: userId,
+              ),
+            );
+          case '/ratings':
+            final userId = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => RatingsScreen(userId: userId),
+            );
+          case '/actor_details':
+            final actorId = settings.arguments as int;
+            return MaterialPageRoute(
+              builder: (context) => ActorDetailsScreen(actorId: actorId),
+            );
+          case '/tv_details':
+            final tvId = settings.arguments as int;
+            return MaterialPageRoute(
+              builder: (context) => TvShowDetailScreen(tvId: tvId),
+            );
+          case '/see_more':
+            final args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+              builder: (context) => SeeMoreScreen(
+                title: args['title'],
+                category: args['category'],
+              ),
             );
           default:
             return MaterialPageRoute(

@@ -289,7 +289,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    String cat = "popular";
+                    if (title == "Coming Soon") cat = "upcoming";
+                    if (title == "Top Rated") cat = "top_rated";
+                    Navigator.pushNamed(
+                      context,
+                      '/see_more',
+                      arguments: {'title': title, 'category': cat},
+                    );
+                  },
                   child: const Text(
                     "See More",
                     style: TextStyle(color: AppColors.accentOrange),
