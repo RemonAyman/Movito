@@ -4,6 +4,7 @@ import '../../data/api/movie_api.dart';
 import '../../data/models/movie.dart';
 import '../../utils/constants.dart';
 import '../widgets/movie_card.dart';
+import '../widgets/premium_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
