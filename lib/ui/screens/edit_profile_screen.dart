@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../data/user_preferences.dart';
 import '../../utils/constants.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -75,8 +75,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           await _db.collection('users').doc(user.uid).update({
             'avatarBase64': base64,
           });
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('avatarBase64', base64);
+          await UserPreferences.updateProfile(avatar: base64);
 
           setState(() {
             _avatarBase64 = base64;
@@ -104,6 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     setState(() => _isSaving = true);
     try {
       await _db.collection('users').doc(user.uid).update({'username': name});
+      await UserPreferences.updateProfile(name: name);
       _showSnackbar('✅ تم حفظ التغييرات');
     } catch (e) {
       _showSnackbar('❌ فشل حفظ التغييرات');
@@ -253,7 +253,7 @@ class _AvatarSection extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               boxShadow: [
-                BoxShadow(color: purple.withValues(alpha: 0.5), blurRadius: 40),
+                BoxShadow(color: purple.withOpacity(0.5), blurRadius: 40),
               ],
               color: avatarBase64 != null
                   ? Colors.transparent

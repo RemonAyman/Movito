@@ -120,7 +120,7 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
               colors: [
                 Colors.transparent,
                 Colors.transparent,
-                AppColors.movitoBackground.withValues(alpha: 0.7),
+                AppColors.movitoBackground.withOpacity(0.7),
                 AppColors.movitoBackground,
               ],
             ),
@@ -158,7 +158,7 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryPurple.withValues(alpha: 0.3),
+                    color: AppColors.primaryPurple.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(

@@ -211,7 +211,7 @@ class _NewGroupScreenState extends State<NewGroupScreen> {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.primaryPurple.withValues(alpha: 0.2),
+                  color: AppColors.primaryPurple.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
@@ -276,7 +276,7 @@ class _NewGroupScreenState extends State<NewGroupScreen> {
         onPressed: enabled ? _createGroup : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: purple,
-          disabledBackgroundColor: purple.withValues(alpha: 0.5),
+          disabledBackgroundColor: purple.withOpacity(0.5),
           minimumSize: const Size(double.infinity, 56),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -384,7 +384,7 @@ class _FriendCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
+              color: Colors.black.withOpacity(0.2),
               blurRadius: 6,
               offset: const Offset(0, 3),
             ),
@@ -442,7 +442,7 @@ class _Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
-          colors: [purple.withValues(alpha: 0.3), const Color(0xFF2A1B3D)],
+          colors: [purple.withOpacity(0.3), const Color(0xFF2A1B3D)],
         ),
       ),
       child: ClipOval(

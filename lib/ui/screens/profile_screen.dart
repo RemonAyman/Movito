@@ -225,7 +225,7 @@ class _ProfileHeader extends StatelessWidget {
                 height: 120,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primaryPurple.withValues(alpha: 0.3),
+                  color: AppColors.primaryPurple.withOpacity(0.3),
                 ),
                 child: ClipOval(
                   child: avatarBase64.isNotEmpty
@@ -309,7 +309,7 @@ class _WatchTimeCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground.withValues(alpha: 0.9),
+        color: AppColors.cardBackground.withOpacity(0.9),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

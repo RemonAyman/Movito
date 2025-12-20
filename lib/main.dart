@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'ui/screens/login_screen.dart';
 import 'ui/screens/signup_screen.dart';
@@ -23,7 +24,11 @@ import 'ui/screens/splash_screen.dart';
 import 'ui/screens/tv_show_detail_screen.dart';
 import 'ui/screens/search_screen.dart';
 import 'ui/screens/see_more_screen.dart';
+import 'ui/screens/main_shell.dart';
 import 'utils/constants.dart';
+import 'data/notification_service.dart';
+import 'data/user_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +36,17 @@ void main() async {
 
   final prefs = await SharedPreferences.getInstance();
   final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  final notificationService = NotificationService();
+  await notificationService.initialize();
+
+  if (isLoggedIn) {
+    await notificationService.startFirestoreListener();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await UserPreferences.refreshFromFirebase(user.uid);
+    }
+  }
 
   runApp(MovieApp(isLoggedIn: isLoggedIn));
 }
@@ -44,23 +60,59 @@ class MovieApp extends StatefulWidget {
 }
 
 class _MovieAppState extends State<MovieApp> {
-  late bool _isLoggedIn;
-
   @override
   void initState() {
     super.initState();
-    _isLoggedIn = widget.isLoggedIn;
+    _setupNotificationHandling();
   }
 
-  void _onLoginSuccess() {
-    setState(() {
-      _isLoggedIn = true;
+  void _setupNotificationHandling() {
+    // 1. App was in background but still running
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      _handleNotificationClick(message.data);
     });
+
+    // 2. App was terminated
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        _handleNotificationClick(message.data);
+      }
+    });
+  }
+
+  void _handleNotificationClick(Map<String, dynamic> data) {
+    final chatId = data['chatId'];
+    final isGroup = data['isGroup'] == 'true' || data['isGroup'] == true;
+
+    if (chatId != null) {
+      final navigator = navigatorKey.currentState;
+      if (navigator != null) {
+        final route = isGroup ? '/chat_detail' : '/private_chat_detail';
+        navigator.pushNamed(route, arguments: chatId);
+      }
+    }
+  }
+
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  void _onLoginSuccess() async {
+    setState(() {
+      // Login state is handled by navigation and initial session
+    });
+
+    final notificationService = NotificationService();
+    await notificationService.startFirestoreListener();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await UserPreferences.refreshFromFirebase(user.uid);
+    }
+    navigatorKey.currentState?.pushReplacementNamed('/main');
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'Movito',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -80,6 +132,8 @@ class _MovieAppState extends State<MovieApp> {
       initialRoute: '/splash',
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case '/main':
+            return MaterialPageRoute(builder: (context) => const MainShell());
           case '/login':
             return MaterialPageRoute(
               builder: (context) =>

@@ -151,7 +151,7 @@ class _NewPrivateChatScreenState extends State<NewPrivateChatScreen> {
           Text(
             "Try a different search term",
             style: TextStyle(
-              color: AppColors.primaryPurple.withValues(alpha: 0.7),
+              color: AppColors.primaryPurple.withOpacity(0.7),
               fontSize: 14,
             ),
           ),
@@ -186,7 +186,7 @@ class _UserCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -235,7 +235,7 @@ class _Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
-          colors: [purple.withValues(alpha: 0.3), const Color(0xFF2A1B3D)],
+          colors: [purple.withOpacity(0.3), const Color(0xFF2A1B3D)],
         ),
       ),
       child: ClipOval(

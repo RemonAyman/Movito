@@ -147,7 +147,7 @@ class _Section extends StatelessWidget {
             width: double.infinity,
             height: 100,
             decoration: BoxDecoration(
-              color: const Color(0xFF1B1330).withValues(alpha: 0.5),
+              color: const Color(0xFF1B1330).withOpacity(0.5),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Center(
@@ -216,7 +216,7 @@ class _FriendRequestCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -230,10 +230,7 @@ class _FriendRequestCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
-                  colors: [
-                    purple.withValues(alpha: 0.3),
-                    const Color(0xFF2A1B3D),
-                  ],
+                  colors: [purple.withOpacity(0.3), const Color(0xFF2A1B3D)],
                 ),
               ),
               child: ClipOval(
@@ -272,7 +269,7 @@ class _FriendRequestCard extends StatelessWidget {
                   Text(
                     user['email'] ?? "",
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.7),
+                      color: Colors.white.withOpacity(0.7),
                       fontSize: 13,
                     ),
                     maxLines: 1,

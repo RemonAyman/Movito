@@ -332,7 +332,7 @@ class _MovieBubble extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "⭐ ${data['movieRating']?.toStringAsFixed(1) ?? '0.0'}",
+                          "⭐ ${(data['movieRating'] as num?)?.toDouble().toStringAsFixed(1) ?? '0.0'}",
                           style: const TextStyle(
                             color: Color(0xFFFFD700),
                             fontSize: 12,
@@ -377,7 +377,7 @@ class _Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
-          colors: [purple.withValues(alpha: 0.3), const Color(0xFF2A1B3D)],
+          colors: [purple.withOpacity(0.3), const Color(0xFF2A1B3D)],
         ),
       ),
       child: ClipOval(

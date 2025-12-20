@@ -15,10 +15,7 @@ class NeonTitle extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: AppColors.textColor,
           shadows: [
-            Shadow(
-              color: AppColors.neonGlow.withValues(alpha: 0.9),
-              blurRadius: 45,
-            ),
+            Shadow(color: AppColors.neonGlow.withOpacity(0.9), blurRadius: 45),
           ],
         ),
         textAlign: TextAlign.center,
@@ -54,7 +51,7 @@ class NeonBox extends StatelessWidget {
         border: Border.all(color: AppColors.neonGlow, width: 2),
         boxShadow: [
           BoxShadow(
-            color: AppColors.neonGlow.withValues(alpha: 0.6),
+            color: AppColors.neonGlow.withOpacity(0.6),
             blurRadius: 18,
             spreadRadius: 0,
           ),

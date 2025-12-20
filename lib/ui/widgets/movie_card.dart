@@ -19,7 +19,7 @@ class MovieCard extends StatelessWidget {
       elevation: 6,
       margin: const EdgeInsets.symmetric(vertical: 8),
       color: AppColors.cardBackground,
-      shape: RoundedCornerShape(12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         onTap: onClick,
         borderRadius: BorderRadius.circular(12),

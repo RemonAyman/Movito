@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../notification_service.dart';
+import '../user_preferences.dart';
 
 class ChatRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -64,6 +66,37 @@ class ChatRepository {
     });
 
     await batch.commit();
+
+    // Trigger Notifications
+    try {
+      final chatDoc = await _db.collection('chats').doc(chatId).get();
+      final chatData = chatDoc.data()!;
+      final members = List<String>.from(chatData['members']);
+      final isGroup = chatData['isGroup'] ?? false;
+      final chatTitle = isGroup
+          ? (chatData['name'] ?? "Group Chat")
+          : "New Message";
+
+      final userData = await UserPreferences.getUserData();
+      final senderName = userData['name'] ?? "Someone";
+      final senderAvatar = userData['avatar'] ?? "";
+
+      final notificationService = NotificationService();
+      for (var memberId in members) {
+        if (memberId != uid) {
+          await notificationService.sendNotificationToUser(
+            userId: memberId,
+            title: isGroup ? "$chatTitle ($senderName)" : senderName,
+            body: isImage ? "📷 Image" : text,
+            chatId: chatId,
+            isGroup: isGroup,
+            senderAvatar: senderAvatar,
+          );
+        }
+      }
+    } catch (e) {
+      print("Error sending notifications: $e");
+    }
   }
 
   Future<String> getOrCreatePrivateChat(String otherUserId) async {

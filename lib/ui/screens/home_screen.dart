@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Colors.white.withValues(alpha: 0.7),
+              color: Colors.white.withOpacity(0.7),
               letterSpacing: 0.5,
             ),
           ),
@@ -259,118 +259,29 @@ class _HomeScreenState extends State<HomeScreen> {
     required String subtitle,
     required List<Movie> movies,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Colors.white.withValues(alpha: 0.7),
-                      ),
-                    ),
-                  ],
-                ),
-                TextButton(
-                  onPressed: () {
-                    String cat = "popular";
-                    if (title == "Coming Soon") cat = "upcoming";
-                    if (title == "Top Rated") cat = "top_rated";
-                    Navigator.pushNamed(
-                      context,
-                      '/see_more',
-                      arguments: {'title': title, 'category': cat},
-                    );
-                  },
-                  child: const Text(
-                    "See More",
-                    style: TextStyle(color: AppColors.accentOrange),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          SizedBox(
-            height: 220,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: movies.length,
-              itemBuilder: (context, index) {
-                final movie = movies[index];
-                final posterUrl = movie.posterPath != null
-                    ? "${AppConstants.imageBaseUrl}${movie.posterPath}"
-                    : null;
-
-                return GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    '/details',
-                    arguments: movie.id,
-                  ),
-                  child: Container(
-                    width: 140,
-                    margin: const EdgeInsets.only(right: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
-                            child: posterUrl != null
-                                ? CachedNetworkImage(
-                                    imageUrl: posterUrl,
-                                    fit: BoxFit.cover,
-                                    width: 140,
-                                  )
-                                : Container(color: Colors.grey[800]),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          movie.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "⭐ ${movie.voteAverage}",
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        PremiumSectionTitle(
+          title: title,
+          subtitle: subtitle,
+          onSeeMore: () {
+            String cat = "popular";
+            if (title == "Coming Soon") cat = "upcoming";
+            if (title == "Top Rated") cat = "top_rated";
+            Navigator.pushNamed(
+              context,
+              '/see_more',
+              arguments: {'title': title, 'category': cat},
+            );
+          },
+        ),
+        PremiumMovieRow(
+          movies: movies,
+          onMovieTap: (movie) =>
+              Navigator.pushNamed(context, '/details', arguments: movie.id),
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 }

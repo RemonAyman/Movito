@@ -200,7 +200,7 @@ class _AddFriendScreenState extends State<AddFriendScreen> {
           Text(
             subtitle,
             style: TextStyle(
-              color: AppColors.primaryPurple.withValues(alpha: 0.7),
+              color: AppColors.primaryPurple.withOpacity(0.7),
               fontSize: 13,
             ),
           ),
@@ -240,7 +240,7 @@ class _UserCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -254,10 +254,7 @@ class _UserCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
-                  colors: [
-                    purple.withValues(alpha: 0.3),
-                    const Color(0xFF2A1B3D),
-                  ],
+                  colors: [purple.withOpacity(0.3), const Color(0xFF2A1B3D)],
                 ),
               ),
               child: ClipOval(
@@ -296,7 +293,7 @@ class _UserCard extends StatelessWidget {
                   Text(
                     user['email'] ?? "",
                     style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.7),
+                      color: Colors.white.withOpacity(0.7),
                       fontSize: 13,
                     ),
                     maxLines: 1,

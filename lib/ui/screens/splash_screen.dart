@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
     final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
     if (mounted) {
-      Navigator.pushReplacementNamed(context, isLoggedIn ? '/home' : '/login');
+      Navigator.pushReplacementNamed(context, isLoggedIn ? '/main' : '/login');
     }
   }
 

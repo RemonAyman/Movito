@@ -637,8 +637,8 @@ class _ShareSheetState extends State<_ShareSheet> {
                       return ListTile(
                         onTap: () => _shareTo(chat['id']),
                         leading: CircleAvatar(
-                          backgroundColor: AppColors.primaryPurple.withValues(
-                            alpha: 0.2,
+                          backgroundColor: AppColors.primaryPurple.withOpacity(
+                            0.2,
                           ),
                           backgroundImage: chat['avatar'] != null
                               ? MemoryImage(base64Decode(chat['avatar']))

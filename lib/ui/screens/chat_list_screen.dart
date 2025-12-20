@@ -156,7 +156,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
           Text(
             "Start a conversation with your friends!",
             style: TextStyle(
-              color: AppColors.primaryPurple.withValues(alpha: 0.7),
+              color: AppColors.primaryPurple.withOpacity(0.7),
               fontSize: 14,
             ),
           ),
@@ -198,7 +198,7 @@ class _ChatItemCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -230,7 +230,7 @@ class _ChatItemCard extends StatelessWidget {
                       Text(
                         time,
                         style: TextStyle(
-                          color: purple.withValues(alpha: 0.8),
+                          color: purple.withOpacity(0.8),
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                         ),
@@ -301,9 +301,9 @@ class _Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
-          colors: [purple.withValues(alpha: 0.3), const Color(0xFF2A1B3D)],
+          colors: [purple.withOpacity(0.3), const Color(0xFF2A1B3D)],
         ),
-        border: Border.all(color: purple.withValues(alpha: 0.3), width: 2),
+        border: Border.all(color: purple.withOpacity(0.3), width: 2),
       ),
       child: ClipOval(
         child: avatarBase64 != null && avatarBase64!.isNotEmpty

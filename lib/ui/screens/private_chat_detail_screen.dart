@@ -256,7 +256,7 @@ class _DateHeader extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         decoration: BoxDecoration(
-          color: const Color(0xFF2A1B3D).withValues(alpha: 0.6),
+          color: const Color(0xFF2A1B3D).withOpacity(0.6),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
@@ -364,7 +364,7 @@ class _MovieBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: isMine ? AppColors.primaryPurple : const Color(0xFF333333),
-      shape: RoundedCornerShape(16),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: InkWell(
         onTap: () => Navigator.pushNamed(
           context,
@@ -406,7 +406,7 @@ class _MovieBubble extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          "⭐ ${data['movieRating']?.toStringAsFixed(1) ?? '0.0'}",
+                          "⭐ ${(data['movieRating'] as num?)?.toDouble().toStringAsFixed(1) ?? '0.0'}",
                           style: const TextStyle(
                             color: Color(0xFFFFD700),
                             fontSize: 12,
@@ -451,7 +451,7 @@ class _Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
-          colors: [purple.withValues(alpha: 0.3), const Color(0xFF2A1B3D)],
+          colors: [purple.withOpacity(0.3), const Color(0xFF2A1B3D)],
         ),
       ),
       child: ClipOval(
