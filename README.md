@@ -175,5 +175,3 @@ Movito is a full-featured Android movie application that combines entertainment 
 The project follows clean architecture principles using MVVM and modern Android technologies, making it scalable and production-ready.
 
 
-##  Developed By
-Movito Team 💙  
